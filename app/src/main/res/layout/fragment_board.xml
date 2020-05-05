@@ -16,6 +16,16 @@
         android:layout_margin="32dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <Button
+        android:layout_marginTop="300dp"
+        android:id="@+id/btn_get_started"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/colorPrimary"
+        android:text="GET STARTED"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="18sp"
+        />
 
 
 </LinearLayout>

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (true){
+        if (false){
             startActivity(new Intent(this, OnBoardActivity.class));
             finish();
             return;

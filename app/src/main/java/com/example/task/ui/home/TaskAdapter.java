@@ -19,7 +19,12 @@ private ArrayList<Task> list;
 private OnClickItem onClickItem;
 
     public TaskAdapter(ArrayList<Task> list) {
+
         this.list = list;
+    }
+    public void update(ArrayList<Task> Task) {
+        list = Task;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -42,4 +47,5 @@ holder.bind(list.get(position));
     public void setOnClickItem(OnClickItem onClickItem) {
         this.onClickItem = onClickItem;
     }
+
 }

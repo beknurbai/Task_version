@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.task.ui.Task;
+import com.example.task.ui.home.HomeFragment;
 
 public class FormActivity extends AppCompatActivity {
 EditText editTitle,editDescription;
@@ -44,8 +45,8 @@ EditText editTitle,editDescription;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        if (id == R.id.home){
-            finish();}
+
+            finish();
         return super.onOptionsItemSelected(item);
     }
 
