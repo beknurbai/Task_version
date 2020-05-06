@@ -91,12 +91,10 @@ Task task;
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==42&&resultCode==RESULT_OK&&data!=null){
-            task= (Task) data.getSerializableExtra("task");
-            lists.add(pos,task);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("list",lists);
-            BoardFragment fragment = new BoardFragment();
-            fragment.setArguments(bundle);
-        }
+            HomeFragment fragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            if (fragment!=null){
+            fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode,resultCode,data);
+
+        }}
     }
 }
