@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.task.FormActivity;
+import com.example.task.MainActivity;
 import com.example.task.R;
 import com.example.task.ui.Task;
 
@@ -29,6 +30,7 @@ public class HomeFragment extends Fragment {
  private TaskAdapter adapter;
  Task task;
 private ArrayList<Task> lists =new ArrayList<>();
+
 int pos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -43,16 +45,12 @@ int pos;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter=new TaskAdapter(lists);
         recyclerView.setAdapter(adapter);
+        Task task= (Task) getArguments().getSerializable("list");
+        lists.add(pos,task);
+        adapter.update(lists);
+        adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==42&&resultCode==RESULT_OK&&data!=null){
-task= (Task) data.getSerializableExtra("task");
-lists.add(pos,task);
-adapter.update(lists);
-adapter.notifyDataSetChanged();
-        }
-    }
+
+
 }
