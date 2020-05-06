@@ -2,6 +2,7 @@ package com.example.task.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ int pos;
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK&&data!=null){
+        if (requestCode==42&&resultCode==RESULT_OK&&data!=null){
 task= (Task) data.getSerializableExtra("task");
 lists.add(pos,task);
 adapter.update(lists);
