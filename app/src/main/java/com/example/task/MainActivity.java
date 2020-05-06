@@ -17,6 +17,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -90,11 +91,10 @@ Task task;
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==42&&resultCode==RESULT_OK&&data!=null){
-            HomeFragment fragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
             if (fragment!=null){
             fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode,resultCode,data);
 
-        }}
+        }
     }
 }
