@@ -1,24 +1,23 @@
 package com.example.task;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
+
+import com.example.task.ui.ProfilesActivity;
 import com.example.task.ui.Task;
-import com.example.task.ui.home.HomeFragment;
-import com.example.task.ui.onBoard.BoardFragment;
 import com.example.task.ui.onBoard.OnBoardActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -30,15 +29,18 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+//3. Вывести название файлов в recyclerView в GalleryFragment
 
     private AppBarConfiguration mAppBarConfiguration;
-Task task;
- ArrayList<Task> lists =new ArrayList<>();
+    Task task;
+    ArrayList<Task> lists = new ArrayList<>();
     int pos;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (false){
+        if (!isShow()) {
             startActivity(new Intent(this, OnBoardActivity.class));
             finish();
             return;
@@ -50,9 +52,10 @@ Task task;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this,FormActivity.class),42);
+                startActivityForResult(new Intent(MainActivity.this, FormActivity.class), 42);
             }
         });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -75,9 +78,11 @@ Task task;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        if (id == R.id.action_settings){
-        finish();}
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            saveIsShow();
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -91,10 +96,26 @@ Task task;
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            if (fragment!=null){
-            fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode,resultCode,data);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        if (fragment != null) {
+            fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode, resultCode, data);
 
         }
+
+    }
+
+    private boolean isShow() {
+        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
+        return preferences.getBoolean("isShow", false);
+
+    }
+
+    public void saveIsShow() {
+        SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        preferences.edit().putBoolean("isShow", false).apply();
+    }
+
+    public void startProfActivity(View view) {
+        startActivity(new Intent(MainActivity.this, ProfilesActivity.class));
     }
 }

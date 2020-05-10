@@ -4,12 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".ui.ProfilesActivity">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/list_task"
-        android:id="@+id/recycler_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
