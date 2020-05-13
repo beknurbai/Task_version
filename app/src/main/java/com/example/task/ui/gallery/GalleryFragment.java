@@ -49,7 +49,7 @@ private AdapterGallery adapter;
 
     }
     private void listsGallery(){
-        File folder=new File(Environment.getExternalStorageDirectory(),"DCIM/Camera");
+        File folder=new File(Environment.getExternalStorageDirectory(),"DCIM/Camera ");
         for (File file:folder.listFiles()){
             lists.add(file.toString());
         }

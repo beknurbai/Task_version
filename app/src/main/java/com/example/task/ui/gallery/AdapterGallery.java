@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.task.R;
 import com.example.task.ui.OnClickItem;
-import com.example.task.ui.Task;
-import com.example.task.ui.home.ViewHolder;
 
 import java.util.ArrayList;
 

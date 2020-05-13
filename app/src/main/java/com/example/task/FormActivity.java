@@ -14,9 +14,12 @@ import android.widget.EditText;
 
 import com.example.task.ui.Task;
 import com.example.task.ui.home.HomeFragment;
+import com.example.task.ui.home.TaskAdapter;
 
 public class FormActivity extends AppCompatActivity {
 EditText editTitle,editDescription;
+Task task;
+Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +35,21 @@ EditText editTitle,editDescription;
                     String title=editTitle.getText().toString().trim();
                     String desc=editDescription.getText().toString().trim();
                     Task task=new Task(title,desc);
-                    Intent intent=new Intent();
-                    intent.putExtra("task",task);
-                    setResult(RESULT_OK,intent);
+                    App.getInstance().getDatabase().taskDao().insert(task);
+//                    Intent intent=new Intent();
+//                    intent.putExtra("task",task);
+//                    setResult(RESULT_OK,intent);
                     finish();
                 }
             });
+        if (getIntent() != null) {
+            task = (Task) getIntent().getSerializableExtra("result");
+            editTitle.setText(task.getTitle());
+            editDescription.setText(task.getDescription());
+        }
 
 }
+
     }
 
     @Override
@@ -49,5 +59,6 @@ EditText editTitle,editDescription;
             finish();
         return super.onOptionsItemSelected(item);
     }
+
 
 }

@@ -16,16 +16,19 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.task.App;
 import com.example.task.FormActivity;
 import com.example.task.MainActivity;
 import com.example.task.R;
+import com.example.task.ui.OnClickItem;
 import com.example.task.ui.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnClickItem {
 
  private TaskAdapter adapter;
  Task task;
@@ -43,20 +46,45 @@ int pos;
         super.onViewCreated(view, savedInstanceState);
         RecyclerView recyclerView=view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        lists.addAll(App.getInstance().getDatabase().taskDao().getAll());
         adapter=new TaskAdapter(lists);
         recyclerView.setAdapter(adapter);
+        loadData();
 
     }
+
+    private void loadData() {
+        App.getInstance().getDatabase().taskDao().getAllLive().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                lists.clear();
+                lists.addAll(tasks);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+    @Override
+    public void onItemClick(int pos) {
+        if (pos!=0){
+            lists.remove(pos);
+        }}
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==42&&resultCode==RESULT_OK&&data!=null){
-            task= (Task) data.getSerializableExtra("task");
-            lists.add(pos,task);
-            adapter.update(lists);
-            adapter.notifyDataSetChanged();
-
-        }
+    public void onItemLong(int pos) {
+        DeleteAlert alert=new DeleteAlert();
+        alert.show(getParentFragmentManager(),"delete");
     }
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode==42&&resultCode==RESULT_OK&&data!=null){
+//            task= (Task) data.getSerializableExtra("task");
+//            lists.add(pos,task);
+//            adapter.update(lists);
+//            adapter.notifyDataSetChanged();
+//
+//        }
+//    }
 }

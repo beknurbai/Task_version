@@ -4,20 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
 
+import com.example.task.ui.OnClickItem;
 import com.example.task.ui.ProfilesActivity;
 import com.example.task.ui.Task;
+import com.example.task.ui.home.DeleteAlert;
 import com.example.task.ui.onBoard.OnBoardActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -28,7 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 //3. Вывести название файлов в recyclerView в GalleryFragment
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -93,16 +94,16 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        if (fragment != null) {
-            fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode, resultCode, data);
-
-        }
-
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+//        if (fragment != null) {
+//            fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode, resultCode, data);
+//
+//        }
+//
+//    }
 
     private boolean isShow() {
         SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
@@ -118,4 +119,6 @@ public class MainActivity extends AppCompatActivity {
     public void startProfActivity(View view) {
         startActivity(new Intent(MainActivity.this, ProfilesActivity.class));
     }
+
+
 }
