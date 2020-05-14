@@ -51,15 +51,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.bind(list.get(position));
         holder.onClickItem = onClick;
         holder.setIsRecyclable(true);
-        if(position %2== 1)
-        {
+        if (position % 2 == 1) {
             holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        }else if (position %2 == 1){
+        } else if (position % 2 == 1) {
             holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-        }
-        else
-        {
+        } else {
             holder.itemView.setBackgroundColor(Color.parseColor("#626262"));
         }
     }
@@ -71,13 +68,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textTitle,textDesc;
+        TextView textTitle, textDesc;
         OnClickItem onClickItem;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.textTitle);
-            textDesc=itemView.findViewById(R.id.textDes);
+            textDesc = itemView.findViewById(R.id.textDes);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,6 +82,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     Task task = new Task();
                     task.setTitle(textTitle.getText().toString());
                     task.setDescription(textDesc.getText().toString());
+                    int posit = list.get(getAdapterPosition()).getId();
+                    intent.putExtra("sss",posit);
                     intent.putExtra("result", task);
                     v.getContext().startActivity(intent);
                 }
@@ -127,11 +126,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             App.getInstance().getDatabase().taskDao().delete(task);
             Log.e("olol", "delete");
         }
-        public void update(){
-int Id=list.get(getAdapterPosition()).getId();
-task.setId(Id);
-App.getInstance().getDatabase().taskDao().update(task);
-        }
+
     }
 }
 

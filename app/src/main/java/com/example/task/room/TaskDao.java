@@ -22,6 +22,8 @@ public interface TaskDao {
    void insert(Task task);
     @Delete
     void delete(Task task);
+    @Query("UPDATE task Set title = :newTitle, `description` = :newDesc WHERE id IN (:idList)")
+    void updateSalaryByIdList(int idList ,String newTitle, String newDesc);
     @Update
     void update(Task task);
 }
