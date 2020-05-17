@@ -18,12 +18,16 @@ public interface TaskDao {
 
     @Query("SELECT * FROM task")
     LiveData<List<Task>> getAllLive();
+
     @Insert
-   void insert(Task task);
+    void insert(Task task);
+
     @Delete
     void delete(Task task);
+
     @Query("UPDATE task Set title = :newTitle, `description` = :newDesc WHERE id IN (:idList)")
-    void updateSalaryByIdList(int idList ,String newTitle, String newDesc);
-    @Update
-    void update(Task task);
+    void updateSalaryByIdList(int idList, String newTitle, String newDesc);
+
+    @Query("SELECT * FROM task ORDER BY title ASC")
+    List<Task> sort();
 }

@@ -18,63 +18,52 @@ import com.example.task.ui.home.HomeFragment;
 import com.example.task.ui.home.TaskAdapter;
 
 public class FormActivity extends AppCompatActivity {
-EditText editTitle,editDescription;
-Task task;
-Intent intent;
+    EditText editTitle, editDescription;
+    Task task;
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
-        if (getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             editTitle = findViewById(R.id.edit_task);
             editDescription = findViewById(R.id.edit_description);
-            Button change =findViewById(R.id.save_change);
-            Button save = findViewById(R.id.save_button);
-            save.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String title = editTitle.getText().toString().trim();
-                    String desc = editDescription.getText().toString().trim();
-                    Task task = new Task(title, desc);
-                    App.getInstance().getDatabase().taskDao().insert(task);
-//                    Intent intent=new Intent();
-//                    intent.putExtra("task",task);
-//                    setResult(RESULT_OK,intent);
-                    finish();
-                }
-            });
+        }
             if (getIntent().getSerializableExtra("result") != null) {
-                task = (Task) getIntent().getSerializableExtra("result");
+                Task task = (Task) getIntent().getSerializableExtra("result");
                 editTitle.setText(task.getTitle());
                 editDescription.setText(task.getDescription());
-                save.setVisibility(View.GONE);
-                change.setVisibility(View.VISIBLE);
-                change.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Task task = new Task();
-                        if (getIntent().getSerializableExtra("sss") != null) {
-                            Intent intent = getIntent();
-                            Integer posit = intent.getIntExtra("sss", 1);
-                            App.getInstance().getDatabase().taskDao().updateSalaryByIdList(posit, editTitle.getText().toString(), editDescription.getText().toString());
-                            Log.d("pzd", "us " + posit.toString());
-                            finish();
-                        }
-
-                    }
-                });
-
+                Button save = findViewById(R.id.save_button);
+                save.setText("Update");
             }
         }
-    }
+
+        public void onClick(View view) {
+            if (getIntent().getSerializableExtra("result") != null) {
+                Task editTask = new Task(editTitle.getText().toString(), editDescription.getText().toString());
+                Integer position = getIntent().getIntExtra("sss", 1);
+                App.getInstance().getDatabase().taskDao().updateSalaryByIdList(position,editTask.getTitle(), editTask.getDescription());
+                finish();
+            } else {
+                String title = editTitle.getText().toString().trim();   // trim - убирание пробелов
+                String desc = editDescription.getText().toString().trim();
+                Task task = new Task(title, desc);
+                App.getInstance().getDatabase().taskDao().insert(task);
+            /*Intent intent = new Intent();
+            intent.putExtra(TASK_KEY, task); •PREVIOUS VERSION…
+            setResult(RESULT_OK, intent);*/
+                finish();
+            }
+        }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
+        if (item.getItemId() == android.R.id.home) {
             finish();
+        }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

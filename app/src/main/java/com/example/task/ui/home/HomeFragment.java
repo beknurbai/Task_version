@@ -30,25 +30,30 @@ import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends Fragment implements OnClickItem {
 
- private TaskAdapter adapter;
- Task task;
-private ArrayList<Task> lists =new ArrayList<>();
+    private TaskAdapter adapter;
+    Task task;
+    private ArrayList<Task> lists = new ArrayList<>();
+    LinearLayoutManager LayoutManagerTask;
 
-int pos;
+    int pos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-      return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerView=view.findViewById(R.id.recycler);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         lists.addAll(App.getInstance().getDatabase().taskDao().getAll());
-        adapter=new TaskAdapter(lists);
+        adapter = new TaskAdapter(lists);
         recyclerView.setAdapter(adapter);
+        LayoutManagerTask = new LinearLayoutManager(getContext());
+        LayoutManagerTask.setReverseLayout(true);
+        LayoutManagerTask.setStackFromEnd(true);
+        recyclerView.setLayoutManager(LayoutManagerTask);
         loadData();
 
     }
@@ -63,16 +68,34 @@ int pos;
             }
         });
     }
+
     @Override
     public void onItemClick(int pos) {
-        if (pos!=0){
+        if (pos != 0) {
             lists.remove(pos);
-        }}
+        }
+    }
 
     @Override
     public void onItemLong(int pos) {
-        DeleteAlert alert=new DeleteAlert();
-        alert.show(getParentFragmentManager(),"delete");
+        DeleteAlert alert = new DeleteAlert();
+        alert.show(getParentFragmentManager(), "delete");
+    }
+
+    public void sortList() {
+        lists.clear();
+        lists.addAll(App.getInstance().getDatabase().taskDao().sort());
+        adapter.notifyDataSetChanged();
+        LayoutManagerTask.setReverseLayout(false);
+        LayoutManagerTask.setStackFromEnd(false);
+    }
+
+    public void initList() {
+        lists.clear();
+        lists.addAll(App.getInstance().getDatabase().taskDao().getAll());
+        adapter.notifyDataSetChanged();
+        LayoutManagerTask.setReverseLayout(true);
+        LayoutManagerTask.setStackFromEnd(true);
     }
 
 

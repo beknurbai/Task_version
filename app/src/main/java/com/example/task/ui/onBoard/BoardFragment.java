@@ -1,5 +1,6 @@
 package com.example.task.ui.onBoard;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.task.MainActivity;
 import com.example.task.R;
 
@@ -25,6 +27,7 @@ import com.example.task.R;
  */
 public class BoardFragment extends Fragment {
 Button button;
+LottieAnimationView animation;
 
     public BoardFragment() {
         // Required empty public constructor
@@ -42,9 +45,9 @@ Button button;
     public void onViewCreated(@NonNull View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView text=view.findViewById(R.id.text_fragment);
-       ImageView image=view.findViewById(R.id.image_fragment);
        LinearLayout layout=view.findViewById(R.id.linear);
        button=view.findViewById(R.id.btn_get_started);
+       animation=view.findViewById(R.id.animation_view);
 
 
        button.setOnClickListener(new View.OnClickListener()
@@ -62,19 +65,18 @@ Button button;
         switch (pos){
             case 0:
                 layout.setBackgroundColor(getResources().getColor(R.color.back1));
-                image.setImageResource(R.drawable.images);
                 text.setText(" Добро пожаловать! ");
+                animation.setAnimation(R.raw.hi);
                 button.setVisibility(View.INVISIBLE);
                 break;
             case 1:
                 layout.setBackgroundColor(getResources().getColor(R.color.back2));
-                image.setImageResource(R.drawable.download);
                 text.setText("Рады приветсвовать ");
                 button.setVisibility(View.INVISIBLE);
                 break;
             case 2:
                 layout.setBackgroundColor(getResources().getColor(R.color.back3));
-                image.setImageResource(R.drawable.fixic);
+                animation.setAnimation(R.raw.start);
                 text.setText("Начните сейчас ");
                 break;
         }

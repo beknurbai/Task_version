@@ -6,6 +6,7 @@
     <string name="nav_header_subtitle">moyapochtatut@tochka.ru</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Exit</string>
+    <string name="action_sort">Sort</string>
 
     <string name="menu_home">Задачи</string>
     <string name="menu_gallery">Gallery</string>
