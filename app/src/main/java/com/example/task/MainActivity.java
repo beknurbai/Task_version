@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 
 
+import com.example.task.login.PhoneActivity;
 import com.example.task.ui.OnClickItem;
 import com.example.task.ui.ProfilesActivity;
 import com.example.task.ui.Task;
@@ -18,6 +19,7 @@ import com.example.task.ui.home.HomeFragment;
 import com.example.task.ui.onBoard.OnBoardActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -45,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (!isShow()) {
             startActivity(new Intent(this, OnBoardActivity.class));
+            finish();
+            return;
+        }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null){
+            startActivity(new Intent(this, PhoneActivity.class));
             finish();
             return;
         }
