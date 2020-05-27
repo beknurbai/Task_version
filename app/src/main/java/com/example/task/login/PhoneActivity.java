@@ -44,7 +44,7 @@ public class PhoneActivity extends AppCompatActivity {
         forPhoneNumber = findViewById(R.id.for_number);
         forSmsCode = findViewById(R.id.for_sms_code);
         editCountryCode = findViewById(R.id.country_code);
-        animation=findViewById(R.id.ojidanie);
+        animation = findViewById(R.id.ojidanie);
 
         callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
@@ -102,9 +102,10 @@ public class PhoneActivity extends AppCompatActivity {
                 TimeUnit.SECONDS,
                 this,
                 callbacks);
-        if (editText!=null){
-        forPhoneNumber.setVisibility(View.GONE);
-    }}
+        if (editText != null) {
+            forPhoneNumber.setVisibility(View.GONE);
+        }
+    }
 
     public void onClickVer(View view) {
         String code = editForCode.getText().toString().trim();

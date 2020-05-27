@@ -12,10 +12,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.task.ui.Task;
 import com.example.task.ui.home.HomeFragment;
 import com.example.task.ui.home.TaskAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FormActivity extends AppCompatActivity {
     EditText editTitle, editDescription;
@@ -47,16 +54,31 @@ public class FormActivity extends AppCompatActivity {
                 App.getInstance().getDatabase().taskDao().updateSalaryByIdList(position,editTask.getTitle(), editTask.getDescription());
                 finish();
             } else {
-                String title = editTitle.getText().toString().trim();   // trim - убирание пробелов
+                String title = editTitle.getText().toString().trim();
                 String desc = editDescription.getText().toString().trim();
                 Task task = new Task(title, desc);
                 App.getInstance().getDatabase().taskDao().insert(task);
-            /*Intent intent = new Intent();
-            intent.putExtra(TASK_KEY, task); •PREVIOUS VERSION…
-            setResult(RESULT_OK, intent);*/
-                finish();
             }
-        }
+            String title = editTitle.getText().toString().trim();
+            String desc = editDescription.getText().toString().trim();
+            Map<String, Object> map = new HashMap<>();
+            map.put("title", title);
+            map.put("desc", desc);
+            FirebaseFirestore.getInstance().collection("tasks")
+                    .add(map)
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentReference> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(FormActivity.this, "Успешно", Toast.LENGTH_SHORT);
+                            } else {
+                                Toast.makeText(FormActivity.this, "Ошибка", Toast.LENGTH_SHORT);
+                            }
+                        }
+                    });
+            finish();
+            }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

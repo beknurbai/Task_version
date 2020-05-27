@@ -2,11 +2,12 @@ package com.example.task;
 
 import android.app.Application;
 
+import androidx.multidex.MultiDexApplication;
 import androidx.room.Room;
 
 import com.example.task.room.AppDatabase;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
     private AppDatabase database;
    public static App instance;
     @Override

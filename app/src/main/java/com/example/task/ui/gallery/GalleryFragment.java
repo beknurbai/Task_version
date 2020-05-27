@@ -23,35 +23,48 @@ import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
 
-private AdapterGallery adapter;
-    private ArrayList<String> lists =new ArrayList<String>();
+    private AdapterGallery adapter;
+    private ArrayList<String> lists = new ArrayList<String>();
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_gallery, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerView=view.findViewById(R.id.recycler_gallery);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_gallery);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter=new AdapterGallery(lists);
+        adapter = new AdapterGallery(lists);
         recyclerView.setAdapter(adapter);
-    getPermission();
+        getPermission();
     }
-    public void getPermission(){
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED){
+
+    public void getPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             listsGallery();
-        }else{
-            ActivityCompat.requestPermissions(getActivity(),new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE},101
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101
             );
         }
 
     }
-    private void listsGallery(){
-        File folder=new File(Environment.getExternalStorageDirectory(),"DCIM/Camera ");
-        for (File file:folder.listFiles()){
-            lists.add(file.toString());
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 101) {
+            getPermission();
+        }
+    }
+
+
+    private void listsGallery() {
+        File folder = new File(Environment.getExternalStorageDirectory(), "DCIM/Camera ");
+        for (File file : folder.listFiles()) {
+            lists.add(String.valueOf(file));
+            adapter.notifyDataSetChanged();
         }
     }
 }

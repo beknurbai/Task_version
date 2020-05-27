@@ -40,4 +40,9 @@
         android:name="com.example.task.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_fire_store"
+        android:name="com.example.task.ui.firestore.FireStoreFragment"
+        android:label="@string/menu_fire_store"
+        tools:layout="@layout/fragment_fire_store" />
 </navigation>

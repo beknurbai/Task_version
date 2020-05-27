@@ -16,5 +16,9 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_dehaze_black_24dp"
             android:title="@string/menu_slideshow" />
+        <item
+            android:id="@+id/nav_firestore"
+            android:icon="@drawable/ic_store_black"
+            android:title="@string/menu_fire_store" />
     </group>
 </menu>
