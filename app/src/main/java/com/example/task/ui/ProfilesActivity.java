@@ -41,19 +41,19 @@ public class ProfilesActivity extends AppCompatActivity {
         editName = findViewById(R.id.editName);
         btnSave = findViewById(R.id.btn_save);
         imageViewProfile = findViewById(R.id.img_profile);
-        getData2();
+       getData2();
     }
 
     private void getData2() {
         String uid = FirebaseAuth.getInstance().getUid();
-        FirebaseFirestore.getInstance().collection("users")
-                .document("BexUsersId").addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        FirebaseFirestore.getInstance().collection("user")
+                .document("BexUsersId")
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if (documentSnapshot.exists()) {
                     User user = documentSnapshot.toObject(User.class);
                     editName.setText(user.getName());
-
                 }
             }
         });
@@ -70,7 +70,7 @@ public class ProfilesActivity extends AppCompatActivity {
         String uid = FirebaseAuth.getInstance().getUid();
         String name = editName.getText().toString().trim();
         User user = new User(name, 18, null);
-        FirebaseFirestore.getInstance().collection("users")
+        FirebaseFirestore.getInstance().collection("user")
                 .document("BexUsersId")
                 .set(user)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
