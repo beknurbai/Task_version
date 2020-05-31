@@ -7,7 +7,7 @@
     tools:context=".ui.ProfilesActivity"
     android:orientation="vertical"
     android:padding="24dp">
-    
+
     <ImageView
         android:layout_gravity="center_horizontal"
         android:id="@+id/img_profile"
