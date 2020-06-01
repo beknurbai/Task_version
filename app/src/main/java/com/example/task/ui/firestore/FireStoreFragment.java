@@ -54,15 +54,14 @@ public class FireStoreFragment extends Fragment {
     private void listFromFB(){
         String uid="qcEMqksAlKI0rlgvsdYp";
 //        FirebaseFirestore.getInstance().
-        FirebaseFirestore.getInstance().collection("tasks").document(uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        FirebaseFirestore.getInstance().collection("tasks").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if (documentSnapshot.exists()) {
-                 Task task = documentSnapshot.toObject(Task.class);
-                 list.add(task);
-                 adapter.notifyDataSetChanged();
-                    Log.e("olol","list"+list);
-                }
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (queryDocumentSnapshots!=null)
+                list.addAll(queryDocumentSnapshots.toObjects(Task.class));
+                adapter.notifyDataSetChanged();
+
+
             }
         });
     }
